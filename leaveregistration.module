@@ -1,0 +1,279 @@
+<?php
+/* initialize civicrm */
+require_once './sites/default/civicrm.settings.php';
+require_once './sites/all/modules/contrib/civicrm/CRM/Core/Config.php';
+
+$config =& CRM_Core_Config::singleton();
+
+/* include leaveregistration */
+include_once ('./sites/all/modules/custom/civicrm/extensions/com.bosgoed.leaveregistration/leaveregistration.php');
+include_once ('./sites/all/modules/custom/civicrm/extensions/com.bosgoed.leaveregistration/CRM/Leaveregistration/Page/LeaveRegistration.php');
+
+/*include leaveregistration modules*/
+include_once ('leaveregistration.user.inc');
+include_once ('leaveregistration.overview.inc');
+include_once ('leaveregistration.request.inc');
+
+/**
+ * Implementation of hook_install
+ * 
+ * permissions for leave reagistration
+ */
+function leaveregistration_install()
+{
+  if(!in_array('employee', user_roles())){
+    $role = new stdClass();
+    $role->name = 'employee';
+    $result = user_role_save($role);
+    
+    if(!$result){
+      drupal_set_message( t('An error occurred when creating the employee role !'), 'error');
+    }else {
+      drupal_set_message( t('Role employee created !'), 'error');
+    }
+  }
+  
+  if(!in_array('department head', user_roles())){
+    $role = new stdClass();
+    $role->name = 'department head';
+    $result = user_role_save($role);
+    
+    if(!$result){
+      drupal_set_message( t('An error occurred when creating the department head role !'), 'error');
+    }else {
+      drupal_set_message( t('Role department head created !'), 'error');
+    }
+  }
+  
+  if(!in_array('administration', user_roles())){
+    $role = new stdClass();
+    $role->name = 'administration';
+    $result = user_role_save($role);
+    
+    if(!$result){
+      drupal_set_message( t('An error occurred when creating the administration role !'), 'error');
+    }else {
+      drupal_set_message( t('Role administration created !'), 'error');
+    }
+  }
+  
+  // drupal_block
+  $theme = variable_get('theme_default','none');
+  
+  // drupal_block
+  $result = db_select('block', 'b')
+    ->fields('b')
+    ->condition('module', 'leaveregistration', '=')
+    ->condition('delta', 'leaveregistration', '=')
+    ->condition('theme', $theme, '=')
+    ->range(0,1)
+    ->execute()
+    ->fetchAssoc();
+  
+  if(empty($result)){
+    // insert settings
+    $bid = db_insert('block') // Table name no longer needs {}
+      ->fields(array(
+        'module' => 'leaveregistration',
+        'delta' => 'leaveregistration',
+        'theme' => $theme,
+        'status' => 1,
+        'weight' => 0,
+        'region' => 'sidebar_first',
+        'custom' => 0,
+        'visibility' => 0,
+        'pages' => 'user/*',
+        'cache' => 1,
+      ))
+      ->execute();
+    
+  }else {
+    // update settings
+    db_update('block')
+      ->fields(array(
+        'status' => 1,
+        'weight' => 0,
+        'region' => 'sidebar_first',
+        'custom' => 0,
+        'visibility' => 0,
+        'pages' => 'user/*',
+        'cache' => 1,
+        )
+      )
+      ->condition('module', 'leaveregistration', '=')
+      ->condition('delta', 'leaveregistration', '=')
+      ->condition('theme', $theme, '=')
+      ->execute();
+  }
+  
+  // drupal_block_role
+  $result = db_select('block_role', 'br')
+    ->fields('br')
+    ->condition('module', 'leaveregistration', '=')
+    ->condition('delta', 'leaveregistration', '=')
+    ->condition('rid', 2, '=')
+    ->range(0,1)
+    ->execute()
+    ->fetchAssoc();
+  
+  if(empty($result)){
+    // insert settings
+    $module = db_insert('block_role') // Table name no longer needs {}
+      ->fields(array(
+        'module' => 'leaveregistration',
+        'delta' => 'leaveregistration',
+        'rid' => 2,
+      ))
+      ->execute(); 
+  }
+}
+
+/**
+ * Implementation of hook_permission
+ * 
+ * permissions for leave reagistration
+ */
+function leaveregistration_permission()
+{
+  $permission = array();
+  
+  $permission['access leaveregistration overview'] = array
+  (
+    'title' => t('Access the leave registration overview')
+  );
+  
+  $permission['view leaveregistration'] = array
+  (
+    'title' => t('View leave registration')
+  );
+  
+  $permission['request leaveregistration'] = array
+  (
+    'title' => t('Request leave registration')
+  );
+  
+  $permission['change leaveregistration'] = array
+  (
+    'title' => t('Change leave registration')
+  );
+  
+  $permission['delete leaveregistration'] = array
+  (
+    'title' => t('Delete leave registration')
+  );
+  
+  $permission['ical leaveregistration'] = array
+  (
+    'title' => t('iCal leave registration')
+  );
+    
+  return $permission;
+}
+
+/**
+ * Implementation of hook_menu
+ * 
+ * Menu items for leave registration
+ */
+function leaveregistration_menu()
+{
+  $items = array();
+  
+	$items['user/%/leave'] = array(
+		'title' => t('Leave'),
+    'type' => MENU_LOCAL_TASK,
+		'page callback' => 'drupal_get_form',
+		'page arguments' => array('leaveregistration_overview', 1),
+		'access arguments' => array('access leaveregistration overview'),
+	);
+  
+  $items['user/%/leave/overview'] = array(
+		'title' => t('Overview'),
+    'type' => MENU_DEFAULT_LOCAL_TASK ,
+    'weight' => 1,
+		'page callback' => 'drupal_get_form',
+		'page arguments' => array('leaveregistration_overview', 1),
+		'access arguments' => array('access leaveregistration overview'),
+	);
+     
+  $items['user/%/leave/request/%/view'] = array(
+    'title' => t('View'),
+    'type' => MENU_CALLBACK,
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('leaveregistration_view', 1, 4),
+    'access arguments' => array('view leaveregistration'),
+  );
+    
+  $items['user/%/leave/request/%/request'] = array(
+    'title' => t('Request'),
+    'type' => MENU_CALLBACK,
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('leaveregistration_request', 1, 4),
+    'access arguments' => array('request leaveregistration'),
+  );
+  
+  $items['user/%/leave/request/%/delete'] = array(
+    'title' => t('Delete'),
+    'type' => MENU_CALLBACK,
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('leaveregistration_delete', 1, 4),
+    'access arguments' => array('delete leaveregistration'),
+  );
+    
+  $items['user/%/leave/request/%/ical'] = array(
+    'title' => t('iCal'),
+    'type' => MENU_CALLBACK,
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('leaveregistration_ical', 1, 4),
+    'access arguments' => array('ical leaveregistration'),
+  );
+   
+  return $items;
+}
+
+function leaveregistration_get_cid($uid)
+{
+  $params = array(
+    'version' => 3,
+    'sequential' => 1,
+    'uf_id' => $uid,
+  );  
+  
+  $result = civicrm_api('UFMatch', 'get', $params);
+  
+  return $result['values'][0]['contact_id'];
+}
+
+/**
+ * Implements hook_block_info().
+ */
+function leaveregistration_block_info() 
+{
+  $blocks = array(); 
+  $blocks['leaveregistration'] = array(
+    'info' => t('Leave'),
+  );
+    
+  return $blocks;
+}
+ 
+/**
+ * Implements hook_block_view().
+ */
+function leaveregistration_block_view($delta = '') 
+{
+  global $user;
+  
+  $block = array();
+ 
+  switch ($delta) {
+    case 'leaveregistration':
+      $block['subject'] = t('Leave');
+      $block['content'] = l(t('Leave'), 'user/' . $user->uid . '/leave');
+      $block['page'] = 'user/*';
+      break;
+  }
+ 
+  return $block;
+}
+?>
