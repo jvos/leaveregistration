@@ -6,3 +6,6 @@ project = "leaveregistration"
 package = CiviCRM
 
 dependencies[] = civicrm
+dependencies[] = date_popup
+dependencies[] = mailsystem
+dependencies[] = mimemail

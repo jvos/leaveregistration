@@ -180,21 +180,21 @@ function leaveregistration_menu()
   $items = array();
   
 	$items['user/%/leave'] = array(
-		'title' => t('Leave'),
-    'type' => MENU_LOCAL_TASK,
-		'page callback' => 'drupal_get_form',
-		'page arguments' => array('leaveregistration_overview', 1),
-		'access arguments' => array('access leaveregistration overview'),
+      'title' => t('Leave'),
+      'type' => MENU_LOCAL_TASK,
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('leaveregistration_overview', 1),
+      'access arguments' => array('access leaveregistration overview'),
 	);
   
   $items['user/%/leave/overview'] = array(
-		'title' => t('Overview'),
+    'title' => t('Overview'),
     'type' => MENU_DEFAULT_LOCAL_TASK ,
     'weight' => 1,
-		'page callback' => 'drupal_get_form',
-		'page arguments' => array('leaveregistration_overview', 1),
-		'access arguments' => array('access leaveregistration overview'),
-	);
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('leaveregistration_overview', 1),
+    'access arguments' => array('access leaveregistration overview'),
+  );
      
   $items['user/%/leave/request/%/view'] = array(
     'title' => t('View'),
@@ -224,7 +224,7 @@ function leaveregistration_menu()
     'title' => t('iCal'),
     'type' => MENU_CALLBACK,
     'page callback' => 'drupal_get_form',
-    'page arguments' => array('leaveregistration_ical', 1, 4),
+    'page arguments' => array('leaveregistration_ical_outlook', 1, 4),
     'access arguments' => array('ical leaveregistration'),
   );
    

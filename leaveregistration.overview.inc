@@ -10,9 +10,11 @@ function leaveregistration_overview($form, &$form_state, $user_id)
     unset($_SESSION['leaveregistration']['ical']); // delete
   }
   
-  global $user;  
-  $user_cid = leaveregistration_get_cid($user->uid);
+  // get civicrm contact id from drupal user
+  $session = CRM_Core_Session::singleton();
+  $user_cid = $session->get('userID'); 
   
+  // get cid or set it 
   if(isset($_GET['cid']) and '' != $_GET['cid']){
     $cid = $_GET['cid'];
     
@@ -33,64 +35,42 @@ function leaveregistration_overview($form, &$form_state, $user_id)
     $years[] = date('Y');
   }
     
-  if(empty($cid)){
-    drupal_set_message( t('No contact id !'), 'error');
-    return false;
-  }
-  
-  if(empty($years)){
-    drupal_set_message( t('No years !'), 'error');
-    return false;
-  }
-  
-  if('' == $year){
-    drupal_set_message( t('No year !'), 'error');
-    return false;
-  }
-  
-  if(0 == $user_cid or '' == $user_cid){
-    drupal_set_message( t('No user contact id !'), 'error');
-    return false;
-  }
-  
-  if(0 == $user_id or '' == $user_id){
-    drupal_set_message( t('No user id !'), 'error');
-    return false;
-  }
-  
-  $data = array
-  (
-    'error_platform' => 'drupal',
-    
+  $lrp = new CRM_Leaveregistration_Page_LeaveRegistration();
+  $lrp->run(array(
+    'error_id' => 'leaveregistration_overview',
+    'error_platform' => 'drupal', 
     'cid' => $cid,
     'user_cid' => $user_cid,
     'user_id' => $user_id,
-        
     'years' => $years,
-    'months' => array(),
-        
     'year' => $year,
+    'months' => array(),
     'month' => 'all',
-    
     'type' => 'form',
     'return' => 'return',
-    'elements' => array('department_head_administration_link', 'year', 'administration_collids', 'department_head_collids', 'department_head_request', 'display_name', 'request', 'legend_leave_type', 'credit', 'show_colleagues', 'calendar_year')
-  );
-  
-  $lrp = new CRM_Leaveregistration_Page_LeaveRegistration();
-  $form_elements = $lrp->run($data);
-
-  if(empty($form_elements)){
-    drupal_set_message( t('No form elements !'), 'error');
-    return $form;
-  }
-  
+  ));
+    
   $form['#attributes']['class'][] = 'leaveregistration';
-    
-  foreach($form_elements as $name => $markup){
-    $form[$name]['#markup'] = $markup;
-  }  
-    
+  
+  $form['css']['#markup'] = $lrp->css();
+  $form['js']['#markup'] = $lrp->js();
+  
+  $form['dephead_admin_link']['#markup'] = $lrp->get_dephead_admin_link();
+  $form['year']['#markup'] = $lrp->get_year_form();
+  $form['admin_col_links']['#markup'] = $lrp->get_admin_col_links_form();
+  $form['dephead_col_links']['#markup'] = $lrp->get_dephead_col_links_form();
+  $form['dephead_request']['#markup'] = $lrp->get_dephead_request_form();
+  $form['display_name']['#markup'] = $lrp->get_display_name();
+  $form['request']['#markup'] = $lrp->get_request_form();
+  $form['legend']['#markup'] = $lrp->get_legend_form();
+  $form['credit']['#markup'] = $lrp->get_credit_form();
+  $form['dephead_months']['#markup'] = $lrp->get_dephead_months_form();
+  $form['dephead_show_colleagues']['#markup'] = $lrp->get_dephead_show_colleagues_form();
+  $form['dephead_calendar_year']['#markup'] = $lrp->get_dephead_calendar_year_form();
+  $form['months']['#markup'] = $lrp->get_months_form();
+  $form['show_colleagues']['#markup'] = $lrp->get_show_colleagues_form();
+  $form['calendar_year']['#markup'] = $lrp->get_calendar_year_form();
+      
   return $form;
 }
 ?>
