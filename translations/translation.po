@@ -477,3 +477,81 @@ msgstr "Elke dag van de week"
 
 msgid "Weekend day"
 msgstr "Weekend dag"
+
+msgid "Leave type: "
+msgstr "Verlof type: "
+
+msgid "Date: "
+msgstr "Datum: "
+
+msgid "Duration: "
+msgstr "Duur: "
+
+msgid "From date: "
+msgstr "Vanaf datum: "
+
+msgid "To date: "
+msgstr "Tot datum: "
+
+msgid "Every"
+msgstr "Elke"
+
+msgid "day(s)"
+msgstr "dag(en)"
+
+msgid "Every working day"
+msgstr "Elke werk dag"
+
+msgid "week(s)"
+msgstr "week(en)"
+
+msgid "on"
+msgstr "op"
+
+msgid "month(s)"
+msgstr "maand(en)"
+
+msgid "on day"
+msgstr "op dag"
+
+msgid "on the"
+msgstr "op de"
+
+msgid "year(s)"
+msgstr "jaar(en)"
+
+msgid "The status of the leave request is: "
+msgstr "De status van de verlof aanvraag is: "
+
+msgid "Reason: "
+msgstr "Reden: "
+
+msgid "Leave"
+msgstr "Verlof"
+
+msgid "Leave registration - There is a request on "
+msgstr "Verlof registratie - Er is een aanvraag op "
+
+msgid "Dear"
+msgstr "Beste"
+
+msgid "The leave request of "
+msgstr "De verlof aanvraag van "
+
+msgid "Your leave request is added."
+msgstr "Uw verlof aanvraag is toegevoegd."
+
+msgid "Click the link below to go to the leave request."
+msgstr "Klik de link beneden om naar de verlof aanvraag te gaan."
+
+msgid "If you are not logged in, you must log in first. Click here to login."
+msgstr "Als u niet bent ingelogd, dan moet u eerst inlopggen. Klik beneden om in te loggen."
+
+msgid "Yours sincerely "
+msgstr "Met vriendelijke groet "
+
+msgid "Leave registration - There is a change on "
+msgstr "Verlof registratie - Er is een aanpassing op "
+
+msgid "Your leave request is changed."
+msgstr "Uw verlof aanvraag is veranderd."

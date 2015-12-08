@@ -127,7 +127,7 @@ function leaveregistration_body($lr, $data){
             }
           }
                     
-          $body[] = t('Every') . ' ' . t($data['weekly_each']) . ' ' . t('week / weeks') . ' ' . t('on') . ' ' . implode(', ', $weekly_day_of_the_week_clean);
+          $body[] = t('Every') . ' ' . t($data['weekly_each']) . ' ' . t('week(s)') . ' ' . t('on') . ' ' . implode(', ', $weekly_day_of_the_week_clean);
           break;
         
         case 'monthly':
@@ -1959,7 +1959,7 @@ function leaveregistration_mail($key, &$message, $params)
         break;
         
       case 'change':
-        $message['subject'] = t('Leave registration - there is a change on ') . variable_get('site_name', '');
+        $message['subject'] = t('Leave registration - There is a change on ') . variable_get('site_name', '');
 
         if(isset($params['departement_head_display_name'])){
           $message['body'][] = t('Dear') . ' ' . $params['departement_head_display_name'] . '<br/>';
