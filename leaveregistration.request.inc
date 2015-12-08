@@ -1946,10 +1946,12 @@ function leaveregistration_mail($key, &$message, $params)
                 
         // link to request
         $message['body'][] = t('Click the link below to go to the leave request.');
+        $message['body'][] = '<br/>';
         $message['body'][] = $base_url . $base_path . 'user/' . $params['user_id'] .'/leave/request/' . $params['id'] .'/change?year=' . $params['year'] .'&cid=' . $params['cid'] . '<br/>';
         
         // login first link
         $message['body'][] = t('If you are not logged in, you must log in first. Click here to login.');
+        $message['body'][] = '<br/>';
         $message['body'][] = $base_url . $base_path . 'user';
         
         $message['body'][] = '<br/>';
@@ -1975,11 +1977,13 @@ function leaveregistration_mail($key, &$message, $params)
         $message['body'][] = '<br/>';
                 
         // link to request
-        $message['body'][] = t('Click the link below to go to the leave request.') . '<br/>';
+        $message['body'][] = t('Click the link below to go to the leave request.');
+        $message['body'][] = '<br/>';
         $message['body'][] = $base_url . $base_path . 'user/' . $params['user_id'] .'/leave/request/' . $params['id'] .'/change?year=' . $params['year'] .'&cid=' . $params['cid'] . '<br/>';
         
         // login first link
-        $message['body'][] = t('If you are not logged in, you must log in first. Click here to login.') . '<br/>';
+        $message['body'][] = t('If you are not logged in, you must log in first. Click here to login.');
+        $message['body'][] = '<br/>';
         $message['body'][] = $base_url . $base_path . 'user' . '<br/>';
         
         $message['body'][] = '<br/>';
