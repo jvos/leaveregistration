@@ -1957,7 +1957,7 @@ function leaveregistration_mail($key, &$message, $params)
         // login first link
         $message['body'][] = t('If you are not logged in, you must log in first. Click here to login.');
         $message['body'][] = '<br/>';
-        $message['body'][] = $base_url . $base_path . 'user';
+        $message['body'][] = $base_url . $base_path . 'user' . '<br/>';
         
         $message['body'][] = '<br/>';
         
