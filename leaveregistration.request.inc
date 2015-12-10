@@ -438,11 +438,7 @@ function leaveregistration_request($form, &$form_state, $user_id, $id = 0)
   $form['request']['from_date'] = array
   (
     '#type' => 'date_popup',
-<<<<<<< HEAD
     // this doesn not work after update '#date_format' => 'j-F-Y', // Uses the PHP date() format - http://php.net/manual/en/function.date.php
-=======
-    //'#date_format' => 'j-F-Y', // Uses the PHP date() format - http://php.net/manual/en/function.date.php
->>>>>>> 89764400c76bb01495d82f6b1371307e831fa893
     '#date_format' => 'j-m-Y', // Uses the PHP date() format - http://php.net/manual/en/function.date.php
     '#date_year_range' => '-5:+2', // Limits the year range to the next two upcoming years
     
