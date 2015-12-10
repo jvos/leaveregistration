@@ -1933,11 +1933,13 @@ function leaveregistration_mail($key, &$message, $params)
         $message['subject'] = t('Leave registration - There is a request on ') . variable_get('site_name', '');
 
         if(isset($params['departement_head_display_name'])){
-          $message['body'][] = t('Dear') . ' ' . $params['departement_head_display_name'];
-          $message['body'][] = t('The leave request of ') . $params['employee_display_name'] . t(' is added.');
+          $message['body'][] = t('Dear') . ' ' . $params['departement_head_display_name'] . '<br/>';
+          $message['body'][] = '<br/>';
+          $message['body'][] = t('The leave request of ') . $params['employee_display_name'] . t(' is added.') . '<br/>';
 
         }else {
           $message['body'][] = t('Dear') . ' ' . $params['employee_display_name'] . '<br/>';
+          $message['body'][] = '<br/>';
           $message['body'][] = t('Your leave request is added.') . '<br/>';
         }
         
@@ -1968,10 +1970,12 @@ function leaveregistration_mail($key, &$message, $params)
 
         if(isset($params['departement_head_display_name'])){
           $message['body'][] = t('Dear') . ' ' . $params['departement_head_display_name'] . '<br/>';
+          $message['body'][] = '<br/>';
           $message['body'][] = t('The leave request of ') . $params['employee_display_name'] . t(' is changed.') . '<br/>';
 
         }else {
           $message['body'][] = t('Dear') . ' ' . $params['employee_display_name'] . '<br/>';
+          $message['body'][] = '<br/>';
           $message['body'][] = t('Your leave request is changed.') . '<br/>';
         }
         
