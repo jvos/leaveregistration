@@ -438,7 +438,8 @@ function leaveregistration_request($form, &$form_state, $user_id, $id = 0)
   $form['request']['from_date'] = array
   (
     '#type' => 'date_popup',
-    '#date_format' => 'j-F-Y', // Uses the PHP date() format - http://php.net/manual/en/function.date.php
+    // this doesn not work after update '#date_format' => 'j-F-Y', // Uses the PHP date() format - http://php.net/manual/en/function.date.php
+    '#date_format' => 'j-m-Y', // Uses the PHP date() format - http://php.net/manual/en/function.date.php
     '#date_year_range' => '-5:+2', // Limits the year range to the next two upcoming years
     
     '#title' => t('From date'),
@@ -454,7 +455,7 @@ function leaveregistration_request($form, &$form_state, $user_id, $id = 0)
   $form['request']['to_date'] = array
   (
     '#type' => 'date_popup',
-    '#date_format' => 'j-F-Y', // Uses the PHP date() format - http://php.net/manual/en/function.date.php
+    '#date_format' => 'j-m-Y', // Uses the PHP date() format - http://php.net/manual/en/function.date.php
     '#date_year_range' => '-5:+2', // Limits the year range to the next two upcoming years
     
     '#title' => t('To date'),
@@ -470,7 +471,7 @@ function leaveregistration_request($form, &$form_state, $user_id, $id = 0)
   $form['request']['date'] = array
   (
     '#type' => 'date_popup',
-    '#date_format' => 'j-F-Y', // Uses the PHP date() format - http://php.net/manual/en/function.date.php
+    '#date_format' => 'j-m-Y', // Uses the PHP date() format - http://php.net/manual/en/function.date.php
     '#date_year_range' => '-5:+2', // Limits the year range to the next two upcoming years
     
     '#title' => t('Date'),
@@ -1949,6 +1950,8 @@ function leaveregistration_mail($key, &$message, $params)
         $message['body'][] = '<br/>';
         $message['body'][] = $base_url . $base_path . 'user/' . $params['user_id'] .'/leave/request/' . $params['id'] .'/change?year=' . $params['year'] .'&cid=' . $params['cid'] . '<br/>';
         
+        $message['body'][] = '<br/>';
+        
         // login first link
         $message['body'][] = t('If you are not logged in, you must log in first. Click here to login.');
         $message['body'][] = '<br/>';
@@ -1980,6 +1983,8 @@ function leaveregistration_mail($key, &$message, $params)
         $message['body'][] = t('Click the link below to go to the leave request.');
         $message['body'][] = '<br/>';
         $message['body'][] = $base_url . $base_path . 'user/' . $params['user_id'] .'/leave/request/' . $params['id'] .'/change?year=' . $params['year'] .'&cid=' . $params['cid'] . '<br/>';
+        
+        $message['body'][] = '<br/>';
         
         // login first link
         $message['body'][] = t('If you are not logged in, you must log in first. Click here to login.');
