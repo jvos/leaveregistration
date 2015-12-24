@@ -1030,7 +1030,7 @@ function leaveregistration_request_validate($form, &$form_state){
   $lr->set_data($years); 
   
   // all the colleages
-  $colleages = array();
+  /*$colleages = array();
   switch ($lr->settings[$form_state['values']['cid']]['show_all_colleagues']){
     case 'business':
       foreach($lr->business_colleages_ids[$form_state['values']['cid']] as $bid => $business){
@@ -1050,7 +1050,7 @@ function leaveregistration_request_validate($form, &$form_state){
         }
       }
       break;*/
-    default:
+    /*default:
       foreach($lr->department_colleages_ids[$form_state['values']['cid']] as $did => $department){
         foreach($department['employees'] as $cid => $employee){
           if($cid != $form_state['values']['cid']){
@@ -1080,7 +1080,7 @@ function leaveregistration_request_validate($form, &$form_state){
     $lrcol->set_fields();
     $lrcol->set_contacts($colids);
     $lrcol->set_data(array($form_state['values']['year']));
-  }
+  }*/
   
   $errors = array();
     
@@ -1192,7 +1192,7 @@ function leaveregistration_request_validate($form, &$form_state){
           }
           
           // check if colleage and department heads
-          foreach($colids as $collid){
+          /*foreach($colids as $collid){
             // is not holiday
             if(!isset($lrcol->data[$collid][$year][$month][$day]['holiday'])){
 
@@ -1206,7 +1206,7 @@ function leaveregistration_request_validate($form, &$form_state){
                 drupal_set_message(t('On ') . $day . '-' . $month . '-' . $year . t(' has ') . $lrcol->employees[$collid]['display_name'] . ' ' . strtolower(t($lrcol->option_groups['leave_request_leave_type']['options'][$lrcol->data[$collid][$year][$month][$day]['request']['leave_type']])) . ' !');
               }
             }
-          }
+          }*/
         }
         
       }else {
@@ -1247,7 +1247,7 @@ function leaveregistration_request_validate($form, &$form_state){
         }
         
         // check if colleages and department heads
-        foreach($colids as $collid){
+        /*foreach($colids as $collid){
           // is not holiday
           if(!isset($lrcol->data[$collid][$year][$month][$day]['holiday'])){
             
@@ -1261,7 +1261,7 @@ function leaveregistration_request_validate($form, &$form_state){
               drupal_set_message(t('On ') . $day . '-' . $month . '-' . $year . t(' has ') . $lrcol->employees[$collid]['display_name'] . ' ' . strtolower(t($lrcol->option_groups['leave_request_leave_type']['options'][$lrcol->data[$collid][$year][$month][$day]['request']['leave_type']])) . ' !');
             }
           }
-        }
+        }*/
       }
       break;
       
@@ -1587,7 +1587,7 @@ function leaveregistration_request_validate($form, &$form_state){
         }
         
         // check if colleage and department heads        
-        foreach($colids as $collid){
+        /*foreach($colids as $collid){
           // is not holiday
           if(!isset($lrcol->data[$collid][$year][$month][$day]['holiday'])){
             
@@ -1619,7 +1619,7 @@ function leaveregistration_request_validate($form, &$form_state){
               }
             }
           }
-        }
+        }*/
       }
   }
     
