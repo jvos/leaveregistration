@@ -991,7 +991,7 @@ JS;
 
 function leaveregistration_request_validate($form, &$form_state){
   
-  $lr = new leaveregistration('drupal', 'leaveregistration_request_validate');
+  $lr = new leaveregistration('drupal', 'leaveregistration_request_validate', $form_state['values']['cid']);
   $lr->set_fields();
   $lr->set_contacts(array($form_state['values']['cid'], $form_state['values']['user_cid']));
   
@@ -1682,7 +1682,7 @@ function leaveregistration_request_submit($form, &$form_state){
   
   $values['duration'] = $form_state['values']['duration'];
     
-  $lr = new leaveregistration('drupal', 'leaveregistration_request_submit');
+  $lr = new leaveregistration('drupal', 'leaveregistration_request_submit', ['do' => true]);
   $lr->set_fields();
   $lr->set_contacts(array($form_state['values']['cid'], $form_state['values']['user_cid']));
     
