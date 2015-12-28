@@ -221,6 +221,7 @@ function leaveregistration_request($form, &$form_state, $user_id, $id = 0)
     'month' => 'all',
     'type' => 'form',
     'return' => 'return',
+    'cache' => false,
   ));
   
   $form['#attributes']['class'][] = 'leaveregistration';
@@ -1775,6 +1776,8 @@ function leaveregistration_request_submit($form, &$form_state){
       $_SESSION['leaveregistration']['ical']['cid'] = $form_state['values']['cid'];
     }
     
+    $_SESSION['leaveregistration']['cache'] = true;
+    
     $form_state['redirect'] = array('user/' . $form_state['values']['user_id'] . '/leave/overview/', array('query' => array('year' => $form_state['values']['year'], 'cid' => $form_state['values']['cid'])));
   }
 }
@@ -1820,6 +1823,7 @@ function leaveregistration_delete($form, &$form_state, $user_id, $id)
     'month' => 'all',
     'type' => 'form',
     'return' => 'return',
+    'cache' => false,
   ));
   
   $form['#attributes']['class'][] = 'leaveregistration';
@@ -1897,6 +1901,8 @@ function leaveregistration_delete_yes($form, &$form_state)
       // create
       $lr->credit_over_create($form_state['values']['cid'], ($form_state['values']['year']+1), $over);
     }
+    
+    $_SESSION['leaveregistration']['cache'] = true;
     
     // message
     drupal_set_message(t('The request is deleted !'), 'status');

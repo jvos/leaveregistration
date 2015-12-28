@@ -10,6 +10,12 @@ function leaveregistration_overview($form, &$form_state, $user_id)
     unset($_SESSION['leaveregistration']['ical']); // delete
   }
   
+  $cache = false;
+  if(isset($_SESSION['leaveregistration']['cache']) and $_SESSION['leaveregistration']['cache']){
+    $_SESSION['leaveregistration']['cache'] = false; // empty
+    $cache = true;
+  }
+  
   // get civicrm contact id from drupal user
   $session = CRM_Core_Session::singleton();
   $user_cid = $session->get('userID'); 
@@ -48,6 +54,7 @@ function leaveregistration_overview($form, &$form_state, $user_id)
     'month' => 'all',
     'type' => 'form',
     'return' => 'return',
+    'cache' => $cache,
   ));
     
   $form['#attributes']['class'][] = 'leaveregistration';
