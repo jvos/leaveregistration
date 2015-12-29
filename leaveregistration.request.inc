@@ -45,6 +45,8 @@ function leaveregistration_view($form, &$form_state, $user_id, $id)
   $form['css']['#markup'] = $lrp->css();
   $form['js']['#markup'] = $lrp->js();
   
+  $form['loading']['#markup'] = $lrp->loading();
+  
   $form['display_name'] = array
   (
     '#markup' => '<h1>' . $lrp->get_display_name() . '</h1>'
@@ -228,6 +230,8 @@ function leaveregistration_request($form, &$form_state, $user_id, $id = 0)
   
   $form['css']['#markup'] = $lrp->css();
   $form['js']['#markup'] = $lrp->js();
+  
+  $form['loading']['#markup'] = $lrp->loading();
   
   $form['#validate'][] = 'leaveregistration_request_validate';
   $form['#submit'][] = 'leaveregistration_request_submit';
@@ -1827,6 +1831,11 @@ function leaveregistration_delete($form, &$form_state, $user_id, $id)
   ));
   
   $form['#attributes']['class'][] = 'leaveregistration';
+  
+  $form['css']['#markup'] = $lrp->css();
+  $form['js']['#markup'] = $lrp->js();
+  
+  $form['loading']['#markup'] = $lrp->loading();
   
   $form['display_name'] = array
   (

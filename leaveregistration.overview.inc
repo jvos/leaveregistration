@@ -62,6 +62,8 @@ function leaveregistration_overview($form, &$form_state, $user_id)
   $form['css']['#markup'] = $lrp->css();
   $form['js']['#markup'] = $lrp->js();
   
+  $form['loading']['#markup'] = $lrp->loading();
+  
   $form['dephead_admin_link']['#markup'] = $lrp->get_dephead_admin_link();
   $form['year']['#markup'] = $lrp->get_year_form();
   $form['admin_col_links']['#markup'] = $lrp->get_admin_col_links_form();
