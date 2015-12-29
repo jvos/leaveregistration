@@ -79,7 +79,7 @@ function leaveregistration_overview($form, &$form_state, $user_id)
   $form['months']['#markup'] = $lrp->get_months_form();
   $form['show_colleagues']['#markup'] = $lrp->get_show_colleagues_form();
   $form['calendar_year']['#markup'] = $lrp->get_calendar_year_form();
-      
+    
   return $form;
 }
 ?>
